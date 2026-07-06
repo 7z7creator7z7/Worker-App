@@ -629,28 +629,28 @@ const name = user?.first_name || "USER";
 setTimeout(() => {
     topShowPopup(`👋 Hush kelibsiz, ${name}`, "success");
 }, 1000);
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
     const helpBtn = document.getElementById("helpBtn");
     const helpModal = document.getElementById("helpModal");
     const closeHelp = document.getElementById("closeHelp");
 
-    if (!helpBtn || !helpModal || !closeHelp) {
-        console.log("Help element topilmadi");
-        return;
-    }
+    if (!helpBtn || !helpModal || !closeHelp) return;
+
+    // Boshlanishida yopiq bo'lsin
+    helpModal.classList.add("hidden");
 
     helpBtn.onclick = () => {
-        helpModal.classList.remove("help-hidden");
+        helpModal.classList.remove("hidden");
     };
 
     closeHelp.onclick = () => {
-        helpModal.classList.add("help-hidden");
+        helpModal.classList.add("hidden");
     };
 
     helpModal.onclick = (e) => {
         if (e.target === helpModal) {
-            helpModal.classList.add("help-hidden");
+            helpModal.classList.add("hidden");
         }
     };
 
