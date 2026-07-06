@@ -623,8 +623,11 @@ function topShowPopup(message,type="success"){
     },5000);
 
 }
-const user = Telegram.WebApp.initDataUnsafe.user;
-const name = user?.first_name || "USER";
+let name = "USER";
+
+if (window.Telegram?.WebApp?.initDataUnsafe?.user) {
+    name = Telegram.WebApp.initDataUnsafe.user.first_name || "USER";
+}
 
 setTimeout(() => {
     topShowPopup(`👋 Hush kelibsiz, ${name}`, "success");
