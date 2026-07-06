@@ -330,24 +330,27 @@ let currentWeekIndex=0;
 
 function renderWeek(){
 
-    const week = db.weeks[currentWeekIndex];
+    const week=db.weeks[currentWeekIndex];
 
     if(!week) return;
 
-    weekTitle.textContent = week.key;
+    weekTitle.textContent=week.key;
 
     checkboxes.forEach((box,index)=>{
 
-        const day = week.days[index];
+const day = week.days[index];
 
-        box.checked = day.checked;
-        box.disabled = false;
+box.checked = day.checked;
 
-        box.parentElement.classList.remove("used-day");
+box.disabled = week.locked;
 
-        if(day.used){
-            box.parentElement.classList.add("used-day");
-        }
+box.parentElement.classList.remove("used-day");
+
+if(day.used){
+
+    box.parentElement.classList.add("used-day");
+
+}
 
     });
 
@@ -355,49 +358,26 @@ function renderWeek(){
 
 checkboxes.forEach((box,index)=>{
 
-    box.onchange = ()=>{
+    box.onchange=()=>{
 
-        const week = db.weeks[currentWeekIndex];
+        const week=db.weeks[currentWeekIndex];
 
-        if(!week) return;
+        if(week.locked) return;
 
-        const day = week.days[index];
-
-        // Eski (locked) hafta
-        if(week.locked){
-
-            box.checked = day.checked;
-
-            topShowPopup(
-                "🔒 Bu hafta yakunlangan. Faqat joriy haftani tahrirlashingiz mumkin.",
-                "warning"
-            );
-
-            return;
-
-        }
-
-        // Bonus uchun ishlatilgan kun
-        if(day.used){
-
-            box.checked = true;
-
-            topShowPopup(
-                "🔴 Bu kun bonus hisobida ishlatilgan.",
-                "warning"
-            );
-
-            return;
-
-        }
-
-        day.checked = box.checked;
+week.days[index].checked = box.checked;
 
         saveDB();
 
     };
 
 });
+
+
+createWeek();
+
+currentWeekIndex=db.weeks.length-1;
+
+renderWeek();
 // ================= MONDAY 00:00 CHECK =================
 
 function checkNewWeek(){
