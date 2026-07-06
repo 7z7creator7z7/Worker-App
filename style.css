@@ -1127,3 +1127,6 @@ body{
     border-color:#ef4444;
 
 }
+.hidden{
+    display:none !important;
+}
